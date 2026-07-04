@@ -17,4 +17,14 @@ Implement LASSO regression to avoid multicollinearity
 Includes linear regression, random forest, and XGBoost models as well
 Ensemble Modeling: Stack Model Example
 Use "ensembling" to combine the predictions of several models
-Includes GBM (gradient boosting machine), XGBoost, ranger, and neural net using the caret package
+Includes GBM (gradient boosting machine), XGBoost, ranger, and neural net using the caret package. 
+
+
+
+Demonstrate effective tactics for feature engineering
+Explore linear regression with different regularization methods including ridge, LASSO, and ElasticNet using scikit-learn. 
+
+
+Regularized Linear Models
+Build a basic linear model
+Try more advanced algorithms including XGBoost and neural nets using Keras
