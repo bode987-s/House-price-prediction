@@ -3,5 +3,5 @@
 
 Practice Skills: 
 
-Creative feature engineering 
-Advanced regression techniques like random forest and gradient boosting
+1. Creative feature engineering 
+2. Advanced regression techniques like random forest and gradient boosting
