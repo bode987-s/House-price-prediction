@@ -4,7 +4,7 @@ A machine learning project that explores the Ames housing dataset and builds a r
 
 ## Overview
 
-The goal of this project is to predict `SalePrice` using information about residential properties in Ames, Iowa.
+The goal of this project is to predict `SalePrice` using information about residential properties in Ames.
 
 Rather than jumping straight into modeling, the project follows a structured data science workflow: first understanding and validating the data, then exploring patterns, engineering useful features, and finally training and evaluating multiple models.
 
@@ -29,7 +29,7 @@ The workflow examines features such as:
 * `Kitchen Qual`
 * `Garage Type` and `Garage Finish`
 
-The dataset source is not specified in the workflow.
+The dataset source is Kaggle.
 
 ## Workflow
 
@@ -49,17 +49,14 @@ This includes:
 * Standardizing column formats
 * Splitting the data into training and test sets
 
-The train/test split happens before statistics are calculated, helping prevent information from the test set from influencing later steps.
-
 ### 2. Exploratory Data Analysis
 
 `02_eda.ipynb`
 
-The training data is explored without modifying it.
 
-The analysis includes distributions, categorical variables, correlations, scatter plots, pairplots, outlier investigation, and skewness analysis.
+The analysis includes distributions, categorical variables, correlations, scatter plots, pair plots, outlier investigation, and skewness analysis.
 
-Several relationships with `SalePrice` are investigated, particularly variables such as `OverallQual`, `Gr Liv Area`, `Garage Area`, `Total Bsmt SF`, and `Year Built`.
+Several relationships with `SalePrice` are investigated, particularly variables such as `Overal lQual`, `Gr Liv Area`, `Garage Area`, `Total Bsmt SF`, and `Year Built`.
 
 Statistical tests are also used to support observations from the visual analysis. For example, when the equal-variance assumption was not satisfied across neighborhoods, the workflow used the Kruskal–Wallis test instead of ANOVA.
 
@@ -130,7 +127,6 @@ The workflow uses the Python data science ecosystem, including:
 * **Scikit-learn** — preprocessing, statistical utilities, modeling, pipelines, and hyperparameter tuning
 * **XGBoost** — optional gradient-boosting model
 * **SHAP** — model explainability
-* **Joblib** — persistence of the preprocessing pipeline
 * **Jupyter Notebook** — development and analysis environment
 
 ## Project Structure
@@ -141,8 +137,6 @@ The workflow uses the Python data science ecosystem, including:
 ├── 02_eda.ipynb
 ├── 03_feature_engineering.ipynb
 ├── 04_modeling_and_evaluation.ipynb
-├── train.csv
-├── test.csv
 └── README.md
 ```
 
@@ -160,8 +154,7 @@ The workflow is designed to be executed in order:
 2. Run `02_eda.ipynb` to explore the training data.
 3. Run `03_feature_engineering.ipynb` to build the preprocessing pipeline.
 4. Run `04_modeling_and_evaluation.ipynb` to train, tune, compare, and evaluate the models.
-
-The exact dataset download/setup instructions are not specified in the current workflow, so the required dataset path would need to be added before running the project from a fresh environment.
+\
 
 ## What I Learned
 
