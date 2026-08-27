@@ -1,6 +1,6 @@
 # Ames Housing Price Prediction
 
-Predicting home sale prices in Ames, Iowa using a structured, leakage-aware machine learning pipeline.
+Predicting home sale prices in Ames Dataset, using a structured, leakage-aware machine learning pipeline.
 
 ## Overview
 
