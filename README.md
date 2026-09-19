@@ -8,7 +8,7 @@ This project develops a reproducible machine-learning workflow for predicting re
 
 ## Problems Solved
 
-Describe the original problems and the measurable result of solving each one.
+Describing the original problems and the measurable result of solving each one:
 
 - **Inconsistent raw data** - Identified missing values, inconsistent categories, and unsuitable data types. **Outcome:** produced a cleaned dataset in `AmesHousing_cleaned.csv`.
 - **High-dimensional housing features** - Converted categorical and numeric variables into model-ready features. **Outcome:** created reusable final feature datasets in `X_train_final.csv` and `X_test_final.csv`.
