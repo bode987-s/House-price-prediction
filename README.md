@@ -1,176 +1,183 @@
 # Ames Housing Price Prediction
 
-A machine learning project that explores the Ames housing dataset and builds a reproducible workflow for predicting house sale prices.
+## Purpose and Project Overview
 
-## Overview
+This project develops a reproducible machine-learning workflow for predicting residential sale prices from the Ames Housing dataset. It covers data cleaning, exploratory analysis, feature engineering, preprocessing, model training, evaluation, and export of reusable prediction artifacts. The goal is to turn raw housing records into a reliable modeling dataset while documenting the decisions, limitations, and lessons learned along the way.
 
-The goal of this project is to predict `SalePrice` using information about residential properties in Ames.
+**Example:** The workflow transforms `AmesHousing.csv` into cleaned and engineered training and test data, then uses the fitted preprocessing pipeline and final model to generate price predictions.
 
-Rather than jumping straight into modeling, the project follows a structured data science workflow: first understanding and validating the data, then exploring patterns, engineering useful features, and finally training and evaluating multiple models.
+## Problems Solved
 
-A key focus throughout the project is **avoiding data leakage**. Statistics and transformations are learned from the training data only and then applied to the test data.
+Describe the original problems and the measurable result of solving each one.
 
-## Dataset
+- **Inconsistent raw data** - Identified missing values, inconsistent categories, and unsuitable data types. **Outcome:** produced a cleaned dataset in `AmesHousing_cleaned.csv`.
+- **High-dimensional housing features** - Converted categorical and numeric variables into model-ready features. **Outcome:** created reusable final feature datasets in `X_train_final.csv` and `X_test_final.csv`.
+- **Skewed sale-price target** - Applied a log transformation to reduce the effect of extreme prices. **Outcome:** retained transformed targets in `y_train_log.csv` and `y_test_log.csv` for modeling and comparison.
+- **Reproducibility of predictions** - Saved the trained model and preprocessing components. **Outcome:** exported `final_model.joblib` and `fitted_preprocessing.joblib`.
 
-The project uses the Ames housing dataset.
+## Issues Addressed
 
-The target variable is:
+Track bugs, analysis questions, and feature work here. Link each item to a GitHub issue, pull request, commit, or notebook section.
 
-* `SalePrice` — the final sale price of the property.
+| ID | Issue or feature | Status | Link | Resolution or next step |
+|---|---|---|---|---|
+| #1 | Handle missing values by feature type | Done | [Issue #1](../../issues/1) | Applied documented imputation rules and verified the resulting schema. |
+| #2 | Compare raw and log-transformed target values | In progress | [Issue #2](../../issues/2) | Compare validation metrics after reversing the log transformation. |
+| #3 | Evaluate PCA against the full feature set | Planned | [Issue #3](../../issues/3) | Benchmark accuracy, interpretability, and training cost. |
 
-The workflow examines features such as:
+### Issue Template Example
 
-* `OverallQual` — overall material and finish quality
-* `Gr Liv Area` — above-ground living area
-* `Garage Area` — garage size
-* `Total Bsmt SF` — basement area
-* `Year Built` — original construction year
-* `Neighborhood`
-* `Kitchen Qual`
-* `Garage Type` and `Garage Finish`
+- **Problem:** A categorical feature contains missing values that cannot be passed directly to the estimator.
+- **Investigation:** Check missing-value counts, category frequency, and downstream preprocessing behavior.
+- **Fix:** Add an explicit imputation or `Unknown` category strategy.
+- **Verification:** Confirm no unexpected nulls remain and rerun the affected evaluation step.
 
-The dataset source is Kaggle.
+## Learnings and Insights
 
-## Workflow
+Capture conclusions that should guide future work, not only the final score.
 
-The project is organized into four main notebooks.
+### Key Takeaways
 
-### 1. Data Understanding & Wrangling
+- Data cleaning decisions can affect model quality as much as estimator selection.
+- A log-transformed target can make price prediction less sensitive to unusually expensive homes.
+- Feature engineering should be evaluated with a fixed validation strategy to avoid misleading comparisons.
+- Saving preprocessing with the model is necessary for consistent inference on future records.
 
-`01_data_understanding_and_wrangling.ipynb`
+### Process and Metrics
 
-The first stage focuses on making sure the data is reliable before analyzing it.
+Record the experiment setup so results remain comparable.
 
-This includes:
+- **Validation strategy:** [for example, train/test split with a fixed random seed]
+- **Primary metric:** [for example, RMSE or RMSLE]
+- **Baseline score:** `[metric] = [value]`
+- **Best score:** `[metric] = [value]`
+- **Best model:** `[model name]`
+- **Feature count:** `[count before]` before preprocessing, `[count after]` after preprocessing
+- **Data quality checks:** [null checks, duplicate checks, leakage checks, schema checks]
 
-* Understanding the dataset structure and data types
-* Checking for duplicate IDs and invalid values
-* Handling obvious structural missing values
-* Standardizing column formats
-* Splitting the data into training and test sets
+### Future Work
 
-### 2. Exploratory Data Analysis
+- Add cross-validation and confidence intervals to model comparisons.
+- Compare predictions after converting log-scale outputs back to dollar values.
+- Investigate residuals by neighborhood, house age, and sale-price range.
+- Add an inference script or lightweight API for new property records.
+- Track experiments in a consistent table or experiment-management tool.
 
-`02_eda.ipynb`
+## How to Use or Run
 
+### Prerequisites
 
-The analysis includes distributions, categorical variables, correlations, scatter plots, pair plots, outlier investigation, and skewness analysis.
+- Python 3.10 or newer
+- Jupyter Notebook or JupyterLab
+- A virtual environment
+- Required packages listed in `requirements.txt` (to be added if this project is distributed)
 
-Several relationships with `SalePrice` are investigated, particularly variables such as `Overal lQual`, `Gr Liv Area`, `Garage Area`, `Total Bsmt SF`, and `Year Built`.
+### Setup
 
-Statistical tests are also used to support observations from the visual analysis. For example, when the equal-variance assumption was not satisfied across neighborhoods, the workflow used the Kruskal–Wallis test instead of ANOVA.
-
-The purpose of this stage is not to make final claims, but to identify patterns that can guide feature engineering and modeling.
-
-### 3. Feature Engineering
-
-`03_feature_engineering.ipynb`
-
-The next stage prepares the data for machine learning.
-
-It includes:
-
-* Statistical missing-value imputation
-* Outlier treatment
-* Skewness transformations
-* Log transformation of `SalePrice`
-* Creation of derived features
-* Encoding categorical variables
-* Multicollinearity treatment
-* Feature scaling where appropriate
-* Feature selection
-* Optional PCA experimentation
-
-A `ColumnTransformer` is used to combine preprocessing steps into a reusable pipeline. The pipeline is fitted on the training data and saved for use during modeling.
-
-### 4. Modeling & Evaluation
-
-`04_modeling_and_evaluation.ipynb`
-
-Several models are trained and compared, starting with a linear regression baseline.
-
-The workflow considers:
-
-* Linear Regression
-* Ridge
-* Lasso
-* Decision Tree
-* Random Forest
-* Gradient Boosting
-* XGBoost *(optional)*
-
-Hyperparameters can be tuned using `GridSearchCV` or `RandomizedSearchCV`.
-
-Models are compared using metrics such as **RMSE** and **R²**, with additional evaluation using MAE on the final model.
-
-The analysis also goes beyond a single score by examining residuals, prediction errors, and performance across groups such as neighborhoods, price bands, and property ages.
-
-For the best tree-based model, explainability techniques such as SHAP, Partial Dependence Plots, and Permutation Importance are used to better understand the model's behavior.
-
-## Key Observations
-
-The exploratory workflow indicates that several property characteristics have meaningful relationships with `SalePrice`.
-
-In particular, `OverallQual` shows a strong positive relationship with sale price, while variables related to living area, basement space, garage space, and property age also receive attention during the analysis.
-
-The relationship between features and price is not always perfectly linear. Some variables show nonlinear patterns, variation within groups, and potential outliers.
-
-These are **observations from the exploratory stage**, rather than claims of causation. Their role is to guide the later feature engineering and modeling stages.
-
-## Technologies & Libraries
-
-The workflow uses the Python data science ecosystem, including:
-
-* **Python** — primary programming language
-* **Pandas / NumPy** — data manipulation and numerical operations
-* **Matplotlib / Seaborn** — visualization and exploratory analysis
-* **Scikit-learn** — preprocessing, statistical utilities, modeling, pipelines, and hyperparameter tuning
-* **XGBoost** — optional gradient-boosting model
-* **SHAP** — model explainability
-* **Jupyter Notebook** — development and analysis environment
-
-## Project Structure
-
-```text
-.
-├── 01_data_understanding_and_wrangling.ipynb
-├── 02_eda.ipynb
-├── 03_feature_engineering.ipynb
-├── 04_modeling_and_evaluation.ipynb
-└── README.md
+```bash
+git clone https://github.com/<owner>/<repository>.git
+cd <repository>
+python -m venv .venv
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
-`train.csv` and `test.csv` are generated after the initial data-splitting stage and reused by the following notebooks.
+### Quick Start
 
-## How to Run
+1. Place the source data in the project root.
+2. Run `Data Wrangling .ipynb` to clean and validate the raw data.
+3. Run `EDA .ipynb` to inspect distributions, relationships, and data quality.
+4. Run `Feature Engineering .ipynb` to create model-ready features.
+5. Run `Modeling_.ipynb` or `Modelling .ipynb` to train and evaluate models.
+6. Use `final_model.joblib` with `fitted_preprocessing.joblib` for inference on compatible input data.
 
-The workflow is designed to be executed in order:
+**Example command:**
 
-```text
-01 → 02 → 03 → 04
+```bash
+jupyter lab
 ```
 
-1. Run `01_data_understanding_and_wrangling.ipynb` to validate and split the data.
-2. Run `02_eda.ipynb` to explore the training data.
-3. Run `03_feature_engineering.ipynb` to build the preprocessing pipeline.
-4. Run `04_modeling_and_evaluation.ipynb` to train, tune, compare, and evaluate the models.
-\
+> Keep generated datasets and serialized models versioned only when their size, provenance, and reproducibility are understood. For larger artifacts, document the storage location and retrieval step here.
 
-## What I Learned
+## Roles and Contributions
 
-One of the main lessons from this workflow is that a machine learning project is not just about choosing a model.
+Record ownership by person or team. Update this table as work is completed.
 
-Understanding the data, checking assumptions, investigating relationships, handling skewness and missing values, and preventing leakage all affect how trustworthy the final results are.
+| Contributor | Area | Responsibilities |
+|---|---|---|
+| [Name] | Data wrangling | Cleaning rules, missing values, validation checks |
+| [Name] | Exploratory analysis | Distributions, correlations, outlier analysis |
+| [Name] | Feature engineering | Encoding, transformations, feature selection or PCA |
+| [Name] | Modeling | Baselines, tuning, evaluation, model export |
+| [Name] | Documentation | README, decisions, reproducibility, release notes |
 
-The project also emphasizes keeping preprocessing reproducible: once the preprocessing pipeline is fitted, the same pipeline should be used when preparing data for the models.
+**Example:** `[Name]` owns feature engineering and maintains the preprocessing artifact used by the final model.
 
-## Future Improvements
+## Roadmap
 
-Possible next steps include:
+Short-term milestones should be specific and verifiable.
 
-* Complete the final model comparison and evaluation
-* Experiment with the optional XGBoost and PCA tracks
-* Refine feature engineering based on the EDA findings
-* Compare explainability results across the strongest models
-* Add the final model metrics and conclusions to this README
-* Add an executive-summary notebook for a more presentation-friendly version of the project
+- [ ] Add a pinned dependency file and environment setup instructions.
+- [ ] Consolidate duplicate modeling notebooks into one documented workflow.
+- [ ] Add automated data-quality and schema checks.
+- [ ] Compare full-feature and PCA-based models using the same validation split.
+- [ ] Record final metrics, selected model, and known limitations.
+- [ ] Add a small prediction script with an example input row.
+
+## Documentation Links
+
+Keep important technical context close to the code.
+
+- [Data description](data_description.txt) - Dataset fields and definitions.
+- [Data wrangling notebook](Data%20Wrangling%20.ipynb) - Cleaning and validation.
+- [EDA notebook](EDA%20.ipynb) - Exploratory analysis.
+- [Feature engineering notebook](Feature%20Engineering%20.ipynb) - Transformations and feature construction.
+- [Modeling notebook](Modeling_.ipynb) - Training and evaluation.
+- Architecture diagram: `[add link to docs/architecture.md or an image]`
+- Decision records: `[add link to docs/decisions/]`
+- Experiment log: `[add link to an experiment table or tracking tool]`
+
+### Example Architecture
+
+```text
+Raw CSV
+  -> Data wrangling
+  -> Exploratory analysis
+  -> Feature engineering and preprocessing
+  -> Model training and evaluation
+  -> Saved model and prediction workflow
+```
+
+## Contribution Guidelines
+
+### Style
+
+- Keep notebook steps focused and name outputs clearly.
+- Prefer reproducible code with fixed seeds where randomness is involved.
+- Explain non-obvious data transformations near the code that applies them.
+- Do not commit secrets, local environment files, or unexplained generated artifacts.
+
+### Pull Request Process
+
+1. Create a focused branch for one issue or feature.
+2. Link the pull request to the related issue.
+3. Describe the data, code, and documentation changes.
+4. Include validation results and note any changed metrics or artifacts.
+5. Request review from the owner of the affected area.
+6. Merge only after the relevant notebooks or checks run successfully.
+
+**Pull request example:**
+
+> Adds log-target comparison and updates the modeling notebook. Validation used the fixed test split; RMSLE changed from `[old value]` to `[new value]`. Related to #2.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). Add the license file before publishing if one does not already exist.
+
+## Contact
+
+- **Maintainer:** [Name]
+- **GitHub:** [@username](https://github.com/<username>)
+- **Project issues:** [Open an issue](../../issues)
+- **Email:** [name@example.com]
