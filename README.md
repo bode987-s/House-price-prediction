@@ -19,11 +19,11 @@ Describing the original problems and the measurable result of solving each one:
 
 Track bugs, analysis questions, and feature work here. Link each item to a GitHub issue, pull request, commit, or notebook section.
 
-| ID | Issue or feature | Status | Link | Resolution or next step |
+| ID | Issue or feature | Status | Resolution or next step |
 |---|---|---|---|---|
-| #1 | Handle missing values by feature type | Done | [Issue #1](../../issues/1) | Applied documented imputation rules and verified the resulting schema. |
-| #2 | Compare raw and log-transformed target values | In progress | [Issue #2](../../issues/2) | Compare validation metrics after reversing the log transformation. |
-| #3 | Evaluate PCA against the full feature set | Planned | [Issue #3](../../issues/3) | Benchmark accuracy, interpretability, and training cost. |
+| #1 | Handle missing values by feature type | Done | Applied documented imputation rules and verified the resulting schema. |
+| #2 | Compare raw and log-transformed target values | Done | Compare validation metrics after reversing the log transformation. |
+| #3 | Evaluate PCA against the full feature set | Done | Benchmark accuracy, interpretability, and training cost. |
 
 ### Issue Template Example
 
