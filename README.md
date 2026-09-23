@@ -1,6 +1,6 @@
 # 🏠 Ames Housing Price Prediction
 
-An end-to-end machine learning project for predicting residential house sale prices using the Ames Housing dataset.
+A machine learning project for predicting residential house sale prices using the Ames Housing dataset.
 
 ## 🚀 Live Demo
 
